@@ -1,0 +1,409 @@
+/*!
+ * LESS version of the stylesheet for design kmom01.
+ *
+ * This stylesheet is for the design course and kmom01. Its intention is to
+ * use kmom01.css and lessify the style and use this as a wrapper for the new
+ * style.
+ */
+/**
+ * Internal self contained modules, save in directory module/.
+ */
+/**
+  * Base style to affect HTML elements on a general scale.
+  */
+/**
+ * A responsive menu.
+ */
+/**
+ * Style for responsive menu
+ */
+/**
+ * Outer wrapper for menu
+ */
+.rm-navbar {
+  position: relative;
+}
+.rm-navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/**
+ * Avoid scrolling mobile devices
+ * OBSOLETE?
+ */
+/**
+ * Meny layout for the small buttonized menu.
+ */
+.rm-small {
+  display: none;
+  float: right;
+}
+a.rm-button {
+  display: inline-block;
+  color: inherit;
+  background-color: transparent;
+  outline: none;
+}
+a.rm-button:active {
+  color: inherit;
+  background-color: transparent;
+}
+a.rm-button .rm-button-face-1 {
+  position: absolute;
+  transition: color 0.1s ease;
+}
+a.rm-button .rm-button-face-2 {
+  position: relative;
+  color: transparent;
+  transition: color 0.1s ease;
+}
+a.rm-button.rm-clicked {
+  color: #9FB129;
+  background-color: transparent;
+}
+a.rm-button.rm-clicked .rm-button-face-1 {
+  color: transparent;
+}
+a.rm-button.rm-clicked .rm-button-face-2 {
+  z-index: 2;
+  color: inherit;
+}
+/**
+ * Standard meny layout, valid for any subtype.
+ */
+.rm-default li {
+  display: inline-block;
+}
+.rm-default li li {
+  display: block;
+  min-width: 10em;
+}
+.rm-default a {
+  display: block;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 1em;
+  outline: none;
+}
+.rm-default ul {
+  position: absolute;
+  z-index: 9999;
+  left: -9999px;
+}
+.rm-default ul.rm-show-submenu {
+  left: 0;
+}
+.rm-default ul li {
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.4);
+}
+.rm-default ul ul {
+  left: -9999px;
+}
+/**
+ * Menu layout for the desktop variant, usually full width of browser.
+ */
+.rm-desktop ul {
+  background-color: inherit;
+}
+.rm-desktop li {
+  position: relative;
+}
+.rm-desktop li a:hover,
+.rm-desktop li.current-menu-item a {
+  text-decoration: underline;
+}
+.rm-desktop li a {
+  color: inherit;
+  background-color: inherit;
+}
+.rm-desktop li a:hover {
+  color: inherit;
+  background-color: inherit;
+}
+.rm-desktop li:hover > ul {
+  left: 0;
+}
+.rm-desktop li:hover > ul.rm-submenu-level-1 {
+  left: auto;
+  left: 30%;
+}
+.rm-desktop li .rm-submenu-button {
+  display: none;
+}
+/**
+ * Menu layout for the mobile variant, usually for mobile screens.
+ */
+.rm-mobile {
+  width: 100%;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.4);
+  background-color: #444;
+  color: #fff;
+}
+.rm-mobile a {
+  color: inherit;
+}
+.rm-mobile li {
+  display: block;
+  box-shadow: 0px 0px 1px rgba(255, 255, 255, 0.4);
+  /*        // Header of submenu is closed
+        //&.sub-menu, // For WordPress menu generating
+        &.rm-submenu > a:before {
+            content: "\f0d7";
+        }
+
+        // Header of submenu is opened
+        &.rm-submenu-open > a:before {
+            content: "\f0d8";
+        }
+*/
+}
+.rm-mobile li.rm-submenu-open > ul {
+  position: relative;
+  left: 0;
+}
+/**
+ * Menu layout for the max variant, for mobile screens and complete menues.
+ * Swipe from right by default.
+ */
+.rm-max.rm-navbar {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+}
+.rm-max .rm-small {
+  display: block;
+}
+.rm-max .rm-small .rm-button {
+  color: inherit;
+}
+.rm-max .rm-small .rm-button.rm-clicked {
+  color: #9FB129;
+  position: fixed;
+  top: 16px;
+  right: 24px;
+  z-index: 999;
+}
+.rm-max .rm-mobile {
+  transition: all 0.15s linear;
+  position: fixed;
+  z-index: 998;
+  top: 0;
+  transform: translateX(100%);
+  width: 500px;
+  max-width: 500px;
+  height: 500px;
+  overflow-y: auto;
+  padding-top: 72px;
+  background-color: #131313;
+  /* Color when menu item is clicked */
+  /* Button for submenu */
+  /* Style for submenu */
+}
+.rm-max .rm-mobile li a:active {
+  background-color: transparent;
+}
+.rm-max .rm-mobile.rm-clicked {
+  transform: translateX(0);
+}
+.rm-max .rm-mobile a:hover {
+  text-decoration: underline;
+}
+.rm-max .rm-mobile .rm-submenu-button {
+  float: right;
+  box-shadow: 0px 0px 1px rgba(255, 255, 255, 0.4);
+  background-color: #444;
+  padding: 8px 24px;
+  margin-right: 8px;
+  margin-top: 10px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 1;
+}
+.rm-max .rm-mobile .rm-submenu-button:after {
+  content: "\25BC";
+}
+.rm-max .rm-mobile .rm-submenu-button:hover {
+  text-decoration: none;
+  background-color: #ccc;
+}
+.rm-max .rm-mobile li ul {
+  padding-left: 8px;
+}
+.rm-max .rm-mobile .rm-submenu-open > .rm-submenu-button:after {
+  content: "\25B2";
+}
+.rm-max.rm-swipe-left .rm-mobile {
+  left: 0;
+}
+.rm-max.rm-swipe-right .rm-mobile {
+  right: 0;
+}
+/**
+ * Style for responsive menu
+ */
+/**
+  * Example on media queries
+  */
+@media screen and (max-width: 680px) {
+  .rm-small {
+    display: block;
+  }
+  .rm-desktop {
+    display: none;
+  }
+}
+@media screen and (min-width: 680px) {
+  .rm-small {
+    display: none;
+  }
+}
+/**
+ 
+ /**
+  * Layout style for general structure of header, navbar, main, footer
+  * and other regions of the page including route specific styles.
+  */
+/**
+ * Show off the regions used in the website, to ease styling.
+ */
+.regions .outer-wrap {
+  background-color: #f4e3c9;
+  border: 1px solid #e3b774;
+}
+.regions .inner-wrap {
+  background-color: #f4e0e9;
+  border: 1px solid #d995b4;
+}
+.regions .region-header-col-1,
+.regions .region-header-col-2,
+.regions .region-header-col-3,
+.regions .region-flash,
+.regions .region-breadcrumb,
+.regions .region-flash-message,
+.regions .region-columns-above,
+.regions .region-main,
+.regions .region-after-main,
+.regions .region-columns-below,
+.regions .region-sidebar-left,
+.regions .region-sidebar-right,
+.regions .region-footer,
+.regions .region-footer-column-1,
+.regions .region-footer-column-2,
+.regions .region-footer-column-3 {
+  background-color: #b5dce1;
+  border: 1px solid #6cbac4;
+  color: #111;
+}
+/**
+ * Fluid and Responsive Vertical Grid
+ */
+/**
+ * Namespace what could be namespaced
+ */
+#desinax-vgrid {
+  /**
+     * Wrap grid in a container.
+     */
+  /**
+     * Show grid.
+     */
+  /**
+     * All columns must be wrapped in a row.
+     */
+  /**
+     * Create a column spanning @col columns.
+     */
+  /**
+     * Push a column @offset columns.
+     */
+  /**
+     * Pull a column left @offset columns.
+     */
+  /**
+     * Pull a column right @offset columns.
+     */
+}
+rap-all {
+  overflow-x: hidden;
+  background-color: white;
+}
+.region-header-col-2,
+.region-header-col-2 a {
+  color: #1c4d76;
+  margin-left: 0;
+  font-size: 1.4rem;
+  margin-left: -3px;
+}
+.region-breadcrumb {
+  display: none;
+}
+.region-flash {
+  text-align: center;
+}
+.region-main {
+  min-height: 60vh;
+  background-color: white;
+  border: 5px solid white;
+  border-radius: 10px;
+}
+blockquote {
+  background: #b2e0e3ad;
+  color: #1c4d76;
+  border-left: 10px solid #1c4d76;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C" "\201D" "\2018" "\2019";
+}
+blockquote:before {
+  color: #1c4d76;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+blockquote p {
+  display: inline;
+}
+.blog-post {
+  background: #b2e0e3ad;
+  color: #1c4d76;
+}
+.blog-list-item {
+  background: #b2e0e3ad;
+  color: #1c4d76;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.blog-list-item a {
+  color: #1c4d76;
+  text-decoration: none;
+}
+.inner-wrap-footer {
+  background: #1d4e78;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  align-items: center;
+  height: 30vh;
+}
+.blog-post {
+  border-radius: 10px;
+  padding: 10px;
+}
+.footer-column-1,
+.footer-column-2,
+.footer-column-3 {
+  padding-left: 24px;
+}
+.site-footer {
+  padding-top: 30px;
+  justify-content: center;
+  display: flex;
+}
+.next-previous a {
+  text-decoration: none;
+  color: #1d4e78;
+}
