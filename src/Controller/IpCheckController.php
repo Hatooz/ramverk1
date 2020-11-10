@@ -16,7 +16,7 @@ use Anax\Commons\ContainerInjectableTrait;
  * The controller is mounted on a particular route and can then handle all
  * requests for that mount point.
  */
-class SampleJsonController implements ContainerInjectableInterface
+class IpCheckController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
@@ -52,15 +52,22 @@ class SampleJsonController implements ContainerInjectableInterface
      *
      * @return array
      */
-    public function indexActionGet() : array
+    public function indexActionGet() : object
     {
-        // Deal with the action and return a response.
-        $json = [
-            "message" => __METHOD__ . ", \$db is {$this->db}",
-        ];
-        return [$json];
-    }
+        $body = $this->di->session->get("ip");
 
+        $data = [
+            "result" => $body["result"],
+            "domain" => $body["domain"]
+        ];
+
+        $page = $this->di->get("page");
+        $page->add(
+            "ip_check",
+            $data
+        );
+        return $page->render();
+    }
     /**
      * This is the index method action, it handles:
      * GET METHOD mountpoint
@@ -69,27 +76,34 @@ class SampleJsonController implements ContainerInjectableInterface
      *
      * @return array
      */
-    public function indexActionPost() : array
+    public function indexActionPost()
     {
-        // try {
-            
-            // } catch (\Exception $e) {
-                //     $body = "No body found.";
-                // }
-        $body = $this->di->get("request")->getBodyAsJson();   
-        $valid = filter_var($body["ip"], FILTER_VALIDATE_IP);
-        
-     
-        $json = [
-            "message" => __METHOD__ . ", POST",
-            "body" => $body,
-            "valid" => $valid,
-           
-        ];
-        return [$json];
+        $body = $this->di->get("request")->getPost("ip");   
+        $validIp4 = filter_var($body, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+        $validIp6 = filter_var($body, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+
+        if($validIp4)
+        {
+            $data = [
+                "result" => "IP address $validIp4 is a valid IPv4 IP.",
+                "domain" => gethostbyaddr($body)
+            ];
+        } elseif ($validIp6)
+        {
+            $data = [
+                "result" => "IP address $validIp6 is a valid IPv6 IP.",
+                "domain" => gethostbyaddr($body)
+            ];
+        } else
+        {
+            $data = [
+                "result" => "IP address is not a valid IP.",
+                "domain" => null
+            ];
+        }
+        $this->di->session->set("ip", $data);
+        return $this->di->response->redirect("ip_check");
     }
-
-
 
     /**
      * This sample method dumps the content of $di.

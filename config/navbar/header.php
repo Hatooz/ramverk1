@@ -39,9 +39,14 @@ return [
             "title" => "Om denna webbplats.",
         ],
         [
-            "text" => "Styleväljare",
-            "url" => "style",
-            "title" => "Välj stylesheet.",
+            "text" => "IP Check",
+            "url" => "ip_check",
+            "title" => "IP Check",
+        ],
+        [
+            "text" => "IP Check REST",
+            "url" => "ip_check_rest",
+            "title" => "IP Check REST",
         ],
         [
             "text" => "Verktyg",
