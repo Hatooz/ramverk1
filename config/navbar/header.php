@@ -49,6 +49,11 @@ return [
             "title" => "IP Check REST",
         ],
         [
+            "text" => "Ipsack Check REST",
+            "url" => "ipstack_api",
+            "title" => "Ipstack Check REST",
+        ],
+        [
             "text" => "Verktyg",
             "url" => "verktyg",
             "title" => "Verktyg och möjligheter för utveckling.",

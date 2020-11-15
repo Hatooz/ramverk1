@@ -89,7 +89,7 @@ class IpCheckRestController implements ContainerInjectableInterface
        
         $doRest = $this->di->get("request")->getPost("doRest");
         if ($doRest) {
-            $body = $this->di->get("request")->getPost("ip_rest"); 
+            $body = $this->di->get("request")->getPost("ip_rest");
             $postData = [
                 "ip_rest" => $body
             ];
@@ -100,30 +100,27 @@ class IpCheckRestController implements ContainerInjectableInterface
                     'content' => json_encode($postData)
                 )
             ));
-            $response = file_get_contents("http://www.student.bth.se/~hami19/dbwebb-kurser/ramverk1/me/redovisa/htdocs/ip_check_rest", FALSE, $context);
+            $response = file_get_contents("http://www.student.bth.se/~hami19/dbwebb-kurser/ramverk1/me/redovisa/htdocs/ip_check_rest", false, $context);
             
             echo $response;
             die();
-        }         
+        }
       
-        $body = $this->di->get("request")->getBodyAsJson()["ip_rest"];   
+        $body = $this->di->get("request")->getBodyAsJson()["ip_rest"];
         $validIp4 = filter_var($body, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
         $validIp6 = filter_var($body, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
         
-        if($validIp4)
-        {
+        if ($validIp4) {
             $data = [
                 "result" => "IP address $validIp4 is a valid IPv4 IP.",
                 "domain" => gethostbyaddr($body)
             ];
-        } elseif ($validIp6)
-        {
+        } elseif ($validIp6) {
             $data = [
                 "result" => "IP address $validIp6 is a valid IPv6 IP.",
                 "domain" => gethostbyaddr($body)
             ];
-        } else
-        {
+        } else {
             $data = [
                 "result" => "IP address is not a valid IP.",
                 "domain" => null

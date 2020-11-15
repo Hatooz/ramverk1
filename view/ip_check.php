@@ -1,7 +1,6 @@
 <?php
 namespace Anax\View;
-
-
+ 
 ?>
 <h1>PHP validering</h1>
 <form action="" method="POST">
@@ -10,5 +9,9 @@ namespace Anax\View;
     <input type="submit" value="Check">
 </form>
 
-<p><?=  $result ?></p>
-<p>Domain name: <?=  $domain ?></p>
+<p>Country: <?= $country ?? "Not Available" ?></p>
+<p>Region: <?= $region  ?? "Not Available"  ?></p>
+<p>Latitude: <?= $latitude  ?? "Not Available" ?></p>
+<p>Longitude: <?= $longitude  ?? "Not Available" ?></p>
+<p>IP: <?= $ip  ?? "Not Available" ?></p>
+<p>Type: <?= $type  ?? "Not Available" ?></p>

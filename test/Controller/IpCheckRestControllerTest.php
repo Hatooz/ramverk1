@@ -50,13 +50,12 @@ class IpCheckRestControllerTest extends TestCase
         $this->di->get("session")->start();
         $res = $this->controller->indexActionGet();
         $this->assertInternalType("object", $res);
- 
     }
 
     public function testIndexActionPost()
-    {        
+    {
         $res = $this->controller->indexActionPost();
-        $this->assertInternalType("array", $res); 
+        $this->assertInternalType("array", $res);
     }
 
 

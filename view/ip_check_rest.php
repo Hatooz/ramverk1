@@ -1,7 +1,6 @@
 <?php
 namespace Anax\View;
 
-
 ?>
 <h1>REST validering</h1>
 

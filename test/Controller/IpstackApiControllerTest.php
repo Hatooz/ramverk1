@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test the SampleJsonController.
  */
-class IpCheckControllerTest extends TestCase
+class IpstackApiControllerTest extends TestCase
 {
     
     // Create the di container.
@@ -35,7 +35,7 @@ class IpCheckControllerTest extends TestCase
         $di = $this->di;
 
         // Setup the controller
-        $this->controller = new IpCheckController();
+        $this->controller = new IpstackApiController();
         $this->controller->setDI($this->di);
         $this->controller->initialize();
     }
@@ -50,33 +50,14 @@ class IpCheckControllerTest extends TestCase
         $this->di->get("session")->start();
         $res = $this->controller->indexActionGet();
         $this->assertInternalType("object", $res);
-
-        // $json = $res[0];
-        // $exp = "db is active";
-        // $this->assertContains($exp, $json["message"]);
     }
 
     public function testIndexActionPost()
     {
-        // $context = [
-        //     "ip_rest" => "127.0.0.1"
-        // ];
-        // $res = $this->di->get("request")->setBody($context);
-        // var_dump($res);
-        $this->di->get("session")->start();
-        $this->di->get("response")->redirectSelf();
         $res = $this->controller->indexActionPost();
-        $validIp4 = "127.0.0.1";
-        // $url = substr($_SERVER['REQUEST_URI'], -8);
-        
-         
-        $this->assertInstanceOf("Anax\Response\Response", $res);
-        $this->assertInstanceOf("Anax\Response\ResponseUtility", $res);
-        // $json = $res[0];
-        // $exp = "db is active";
-        // $this->assertContains($url, "ip_check");
+        $this->assertInternalType("array", $res);
     }
- 
+
 
 
     /**

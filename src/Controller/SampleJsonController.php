@@ -76,7 +76,7 @@ class SampleJsonController implements ContainerInjectableInterface
             // } catch (\Exception $e) {
                 //     $body = "No body found.";
                 // }
-        $body = $this->di->get("request")->getBodyAsJson();   
+        $body = $this->di->get("request")->getBodyAsJson();
         $valid = filter_var($body["ip"], FILTER_VALIDATE_IP);
         
      

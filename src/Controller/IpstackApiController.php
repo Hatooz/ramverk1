@@ -17,7 +17,7 @@ use Anax\Ipstack\Ipstack;
  * The controller is mounted on a particular route and can then handle all
  * requests for that mount point.
  */
-class IpCheckController implements ContainerInjectableInterface
+class IpstackApiController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
@@ -27,6 +27,7 @@ class IpCheckController implements ContainerInjectableInterface
      * @var string $db a sample member variable that gets initialised
      */
     private $db = "not active";
+
 
 
     /**
@@ -54,27 +55,15 @@ class IpCheckController implements ContainerInjectableInterface
      */
     public function indexActionGet() : object
     {
-        $body = $this->di->session->get("ip");
-        $key = $this->di->session->get("key");
-        $url = $this->di->session->get("ip");
+        
 
-        $data = [
-            "key" => $key,
-            "url" => $url,
-            "ip" => $body["ip"],
-            "type" => $body["type"],
-            "country" => $body["country_name"],
-            "region" => $body["region_name"],
-            "latitude" => $body["latitude"],
-            "longitude" => $body["longitude"],
-        ];
         $page = $this->di->get("page");
         $page->add(
-            "ip_check",
-            $data
+            "ipstack_api"
         );
         return $page->render();
     }
+
     /**
      * This is the index method action, it handles:
      * GET METHOD mountpoint
@@ -83,46 +72,25 @@ class IpCheckController implements ContainerInjectableInterface
      *
      * @return array
      */
-    public function indexActionPost()
+    public function indexActionPost() : array
     {
-        $stack = new Ipstack();
-        $body = $this->di->get("request")->getPost("ip");
         $accessKey = file_get_contents(__DIR__ . "/api.txt");
         $trimmedKey =  trim($accessKey);
-        
-        $info = $stack->getIpInfo($body ?? "127.0.0.1", $trimmedKey);
-        $this->di->session->set("ip", $info);
-        $this->di->session->set("key", $accessKey);
-        return $this->di->response->redirect("ip_check");
-    }
-    // public function indexActionPost()
-    // {
-    //     $body = $this->di->get("request")->getPost("ip");
-    //     $validIp4 = filter_var($body, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
-    //     $validIp6 = filter_var($body, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        $stack = new Ipstack();
+        $doRest = $this->di->get("request")->getPost("doRest");
+        if ($doRest) {
+            $body = $this->di->get("request")->getPost("ipstack_rest") ?? "127.0.0.1";
+           
+            $response = json_encode($stack->getIpInfo($body, $trimmedKey));
+            
+            echo $response;
+            die();
+        }
 
-    //     if($validIp4)
-    //     {
-    //         $data = [
-    //             "result" => "IP address $validIp4 is a valid IPv4 IP.",
-    //             "domain" => gethostbyaddr($body)
-    //         ];
-    //     } elseif ($validIp6)
-    //     {
-    //         $data = [
-    //             "result" => "IP address $validIp6 is a valid IPv6 IP.",
-    //             "domain" => gethostbyaddr($body)
-    //         ];
-    //     } else
-    //     {
-    //         $data = [
-    //             "result" => "IP address is not a valid IP.",
-    //             "domain" => null
-    //         ];
-    //     }
-    //     $this->di->session->set("ip", $data);
-    //     return $this->di->response->redirect("ip_check");
-    // }
+        $body = $this->di->get("request")->getBodyAsJson()["ipstack_rest"];
+        $json = $stack->getIpInfo($body ?? "127.0.0.1", $trimmedKey);
+        return [$json];
+    }
 
     /**
      * This sample method dumps the content of $di.
