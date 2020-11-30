@@ -17,7 +17,7 @@ use Anax\Ipstack\Ipstack;
  * The controller is mounted on a particular route and can then handle all
  * requests for that mount point.
  */
-class IpstackApiController implements ContainerInjectableInterface
+class WeatherCheckController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
@@ -27,7 +27,6 @@ class IpstackApiController implements ContainerInjectableInterface
      * @var string $db a sample member variable that gets initialised
      */
     private $db = "not active";
-
 
 
     /**
@@ -57,40 +56,44 @@ class IpstackApiController implements ContainerInjectableInterface
     {
         
 
-        $page = $this->di->get("page");
-        $page->add(
-            "ipstack_api"
-        );
-        return $page->render();
-    }
+        $body = $this->di->session->get("weatherData");
 
-    /**
-     * This is the index method action, it handles:
-     * GET METHOD mountpoint
-     * GET METHOD mountpoint/
-     * GET METHOD mountpoint/index
-     *
-     * @return array
-     */
-    public function indexActionPost()
+        $data = [            
+           "body" => $body["content"]["list"] ?? null,
+           "lat" => $body["content"]["city"]["coord"]["lat"] ?? null,
+           "lon" => $body["content"]["city"]["coord"]["lon"] ?? null,
+        ];
+        return $this->di->get("page")
+            ->add("weather_check", $data)
+            ->render(["title" => "Weather Check"]);        
+    }
+    
+    public function weatherActionPost()
     {
         $accessKey = file_get_contents(__DIR__ . "/api.txt");
         $trimmedKey =  trim($accessKey);
-        $stack = new Ipstack();
-        $doRest = $this->di->get("request")->getPost("doRest");
-        if ($doRest) {
-            $body = $this->di->get("request")->getPost("ipstack_rest") ?? "127.0.0.1";
-           
-            $response = json_encode($stack->getIpInfo($body, $trimmedKey));
-            
-            header('Content-Type: application/json');
-            return $response;
-            die();
-        }
+        $ip = $this->di->get("request")->getPost("ip") ?? null;
+        $lat = $this->di->get("request")->getPost("lat") ?? null;
+        $lon = $this->di->get("request")->getPost("lon") ?? null;
 
-        $body = $this->di->get("request")->getBodyAsJson()["ipstack_rest"];
-        $json = $stack->getIpInfo($body ?? "127.0.0.1", $trimmedKey);
-        return [$json];
+        $service = $this->di->get("weatherservice");
+
+        $data = [
+            "content" => $service->getWeather($ip, $lat, $lon),
+        ];
+        $this->di->session->set("weatherData", $data);
+
+
+        return $this->di->response->redirect("weather_check");
+        // $stack = new Ipstack();
+        // $body = $this->di->get("request")->getPost("ip");
+        // $accessKey = file_get_contents(__DIR__ . "/api.txt");
+        // $trimmedKey =  trim($accessKey);
+        
+        // $info = $stack->getIpInfo($body ?? "127.0.0.1", $trimmedKey);
+        // $this->di->session->set("ip", $info);
+        // $this->di->session->set("key", $accessKey);
+        // return $this->di->response->redirect("weather_check");
     }
 
     /**

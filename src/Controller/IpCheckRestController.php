@@ -64,8 +64,8 @@ class IpCheckRestController implements ContainerInjectableInterface
         
 
         $data = [
-            "result" => $body["result"],
-            "domain" => $body["domain"]
+            "result" => $body["result"] ?? null,
+            "domain" => $body["domain"] ?? null,
         ];
 
         $page = $this->di->get("page");
@@ -84,7 +84,7 @@ class IpCheckRestController implements ContainerInjectableInterface
      *
      * @return array
      */
-    public function indexActionPost() : array
+    public function indexActionPost()
     {
        
         $doRest = $this->di->get("request")->getPost("doRest");
@@ -101,8 +101,9 @@ class IpCheckRestController implements ContainerInjectableInterface
                 )
             ));
             $response = file_get_contents("http://www.student.bth.se/~hami19/dbwebb-kurser/ramverk1/me/redovisa/htdocs/ip_check_rest", false, $context);
-            
-            echo $response;
+            header('Content-Type: application/json');
+            return json_encode($response);
+         
             die();
         }
       
@@ -131,6 +132,7 @@ class IpCheckRestController implements ContainerInjectableInterface
      
         $json = [
             "message" => __METHOD__ . ", POST",
+            "header" => "Content-Type: application/json\r\n",
             "result" => $data["result"],
             "domain" => $data["domain"],
            

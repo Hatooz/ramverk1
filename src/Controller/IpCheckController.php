@@ -59,14 +59,14 @@ class IpCheckController implements ContainerInjectableInterface
         $url = $this->di->session->get("ip");
 
         $data = [
-            "key" => $key,
-            "url" => $url,
-            "ip" => $body["ip"],
-            "type" => $body["type"],
-            "country" => $body["country_name"],
-            "region" => $body["region_name"],
-            "latitude" => $body["latitude"],
-            "longitude" => $body["longitude"],
+            "key" => $key ?? null,
+            "url" => $url ?? null,
+            "ip" => $body["ip"] ?? null,
+            "type" => $body["type"] ?? null,
+            "country" => $body["country_name"] ?? null,
+            "region" => $body["region_name"] ?? null,
+            "latitude" => $body["latitude"] ?? null,
+            "longitude" => $body["longitude"] ?? null,
         ];
         $page = $this->di->get("page");
         $page->add(

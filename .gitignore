@@ -4,3 +4,5 @@
 memory::
 composer.lock
 api.txt
+weather_api.txt
+api_keys.php

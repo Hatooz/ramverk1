@@ -54,6 +54,11 @@ return [
             "title" => "Ipstack Check REST",
         ],
         [
+            "text" => "Väderrapport",
+            "url" => "weather_check",
+            "title" => "Weather Check",
+        ],
+        [
             "text" => "Verktyg",
             "url" => "verktyg",
             "title" => "Verktyg och möjligheter för utveckling.",
