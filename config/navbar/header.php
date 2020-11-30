@@ -59,6 +59,11 @@ return [
             "title" => "Weather Check",
         ],
         [
+            "text" => "Föregående väderrapport",
+            "url" => "historical_weather_check",
+            "title" => "Weather Check",
+        ],
+        [
             "text" => "Verktyg",
             "url" => "verktyg",
             "title" => "Verktyg och möjligheter för utveckling.",

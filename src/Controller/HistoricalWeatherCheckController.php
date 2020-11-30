@@ -17,7 +17,7 @@ use Anax\Ipstack\Ipstack;
  * The controller is mounted on a particular route and can then handle all
  * requests for that mount point.
  */
-class WeatherCheckController implements ContainerInjectableInterface
+class HistoricalWeatherCheckController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
@@ -56,18 +56,20 @@ class WeatherCheckController implements ContainerInjectableInterface
     {
         
 
+
+        
         $weather = $this->di->session->get("weatherData")["content"]["weather"];
         $ip = $this->di->session->get("weatherData")["content"]["ip"];
 
         $data = [            
-           "body" => $weather["list"] ?? null,
-           "lat" => $weather["city"]["coord"]["lat"] ?? null,
-           "lon" => $weather["city"]["coord"]["lon"] ?? null,
+           "body" => $weather ?? null,
+           "lat" => $weather["lat"] ?? null,
+           "lon" => $weather["lon"] ?? null,
            "ip" => $ip ?? null,
            
         ];
         return $this->di->get("page")
-            ->add("weather_check", $data)
+            ->add("historical_weather_check", $data)
             ->render(["title" => "Weather Check"]);        
     }
     
@@ -82,12 +84,12 @@ class WeatherCheckController implements ContainerInjectableInterface
         $service = $this->di->get("weatherservice");
 
         $data = [
-            "content" => $service->getWeather($ip, $lat, $lon),
+            "content" => $service->getWeatherThroughMultiCurl($ip, $lat, $lon),
         ];
         $this->di->session->set("weatherData", $data);
 
 
-        return $this->di->response->redirect("weather_check");
+        return $this->di->response->redirect("historical_weather_check");
         // $stack = new Ipstack();
         // $body = $this->di->get("request")->getPost("ip");
         // $accessKey = file_get_contents(__DIR__ . "/api.txt");

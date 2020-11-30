@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Testclass.
  */
-class FModelTest extends TestCase
+class FModelNoServerTest extends TestCase
 {
     // Create the di container.
     protected $di;
