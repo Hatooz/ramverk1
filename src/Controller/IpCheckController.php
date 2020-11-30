@@ -87,8 +87,8 @@ class IpCheckController implements ContainerInjectableInterface
     {
         $stack = new Ipstack();
         $body = $this->di->get("request")->getPost("ip");
-        $accessKey = file_get_contents(__DIR__ . "/api.txt");
-        $trimmedKey =  trim($accessKey);
+        $key_array = include(__DIR__ . '/../../config/api_keys.php');
+        $trimmedKey =  $key_array["keys"]["ipstack"];
         
         $info = $stack->getIpInfo($body ?? "127.0.0.1", $trimmedKey);
         $this->di->session->set("ip", $info);

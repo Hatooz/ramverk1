@@ -107,9 +107,11 @@ class IpCheckRestController implements ContainerInjectableInterface
             die();
         }
       
-        $body = $this->di->get("request")->getBodyAsJson()["ip_rest"];
-        $validIp4 = filter_var($body, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
-        $validIp6 = filter_var($body, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        $body = $this->di->get("request")->getBodyAsJson();
+        if(isset($body["ip_rest"])) {
+            $validIp4 = filter_var($body["ip_rest"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+            $validIp6 = filter_var($body["ip_rest"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        }
         
         if ($validIp4) {
             $data = [
