@@ -57,7 +57,6 @@ class IpCheckController implements ContainerInjectableInterface
         $body = $this->di->session->get("ip");
         $key = $this->di->session->get("key");
         $url = $this->di->session->get("ip");
-
         $data = [
             "key" => $key ?? null,
             "url" => $url ?? null,
@@ -73,6 +72,7 @@ class IpCheckController implements ContainerInjectableInterface
             "ip_check",
             $data
         );
+        
         return $page->render();
     }
     /**
@@ -95,34 +95,6 @@ class IpCheckController implements ContainerInjectableInterface
         $this->di->session->set("key", $accessKey);
         return $this->di->response->redirect("ip_check");
     }
-    // public function indexActionPost()
-    // {
-    //     $body = $this->di->get("request")->getPost("ip");
-    //     $validIp4 = filter_var($body, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
-    //     $validIp6 = filter_var($body, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
-
-    //     if($validIp4)
-    //     {
-    //         $data = [
-    //             "result" => "IP address $validIp4 is a valid IPv4 IP.",
-    //             "domain" => gethostbyaddr($body)
-    //         ];
-    //     } elseif ($validIp6)
-    //     {
-    //         $data = [
-    //             "result" => "IP address $validIp6 is a valid IPv6 IP.",
-    //             "domain" => gethostbyaddr($body)
-    //         ];
-    //     } else
-    //     {
-    //         $data = [
-    //             "result" => "IP address is not a valid IP.",
-    //             "domain" => null
-    //         ];
-    //     }
-    //     $this->di->session->set("ip", $data);
-    //     return $this->di->response->redirect("ip_check");
-    // }
 
     /**
      * This sample method dumps the content of $di.
@@ -140,8 +112,6 @@ class IpCheckController implements ContainerInjectableInterface
         ];
         return [$json];
     }
-
-
 
     /**
      * Try to access a forbidden resource.

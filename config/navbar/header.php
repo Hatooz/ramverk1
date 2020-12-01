@@ -43,16 +43,16 @@ return [
             "url" => "ip_check",
             "title" => "IP Check",
         ],
-        [
-            "text" => "IP Check REST",
-            "url" => "ip_check_rest",
-            "title" => "IP Check REST",
-        ],
-        [
-            "text" => "Ipsack Check REST",
-            "url" => "ipstack_api",
-            "title" => "Ipstack Check REST",
-        ],
+        // [
+        //     "text" => "IP Check REST",
+        //     "url" => "ip_check_rest",
+        //     "title" => "IP Check REST",
+        // ],
+        // [
+        //     "text" => "Ipsack Check REST",
+        //     "url" => "ipstack_api",
+        //     "title" => "Ipstack Check REST",
+        // ],
         [
             "text" => "Väderrapport",
             "url" => "weather_check",
@@ -64,14 +64,19 @@ return [
             "title" => "Weather Check",
         ],
         [
-            "text" => "Föregående väderrapport REST",
-            "url" => "historical_weather_check_rest",
+            "text" => "REST services",
+            "url" => "restServices",
             "title" => "Weather Check",
         ],
-        [
-            "text" => "Verktyg",
-            "url" => "verktyg",
-            "title" => "Verktyg och möjligheter för utveckling.",
-        ],
+        // [
+        //     "text" => "Föregående väderrapport REST",
+        //     "url" => "historical_weather_check_rest",
+        //     "title" => "Weather Check",
+        // ],
+        // [
+        //     "text" => "Verktyg",
+        //     "url" => "verktyg",
+        //     "title" => "Verktyg och möjligheter för utveckling.",
+        // ],
     ],
 ];

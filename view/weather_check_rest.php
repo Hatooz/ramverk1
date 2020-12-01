@@ -2,7 +2,7 @@
 namespace Anax\View;
 
 ?>
-<h1>Historisk väderrdata API</h1>
+<h1>Väderrapport API</h1>
 <form action="" method="POST" class="weather-form">
     <label for="ip">IP: </label>
     <input type="text" name="ip" id="ip">

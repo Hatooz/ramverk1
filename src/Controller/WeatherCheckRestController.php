@@ -4,7 +4,6 @@ namespace Anax\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Anax\Ipstack\Ipstack;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -17,7 +16,7 @@ use Anax\Ipstack\Ipstack;
  * The controller is mounted on a particular route and can then handle all
  * requests for that mount point.
  */
-class HistoricalWeatherCheckRestController implements ContainerInjectableInterface
+class WeatherCheckRestController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
@@ -42,6 +41,8 @@ class HistoricalWeatherCheckRestController implements ContainerInjectableInterfa
         $this->db = "active";
     }
 
+
+
     /**
      * This is the index method action, it handles:
      * GET METHOD mountpoint
@@ -52,21 +53,23 @@ class HistoricalWeatherCheckRestController implements ContainerInjectableInterfa
      */
     public function indexActionGet() : object
     {
+        
+ 
         return $this->di->get("page")
-            ->add("historical_weather_check_rest")
+            ->add("weather_check_rest")
             ->render(["title" => "Weather Check"]);        
     }
     
     public function indexActionPost()
-    {
+    {        
         $ip = $this->di->get("request")->getPost("ip") ?? null;
         $lat = $this->di->get("request")->getPost("lat") ?? null;
         $lon = $this->di->get("request")->getPost("lon") ?? null;
         $service = $this->di->get("weatherservice");
         $data = [
-            "content" => $service->getWeatherThroughMultiCurl($ip, $lat, $lon),
-        ];
-        return [$data];     
+            "content" => $service->getWeather($ip, $lat, $lon),
+        ];        
+        return [$data]; 
     }
 
     /**
@@ -85,6 +88,8 @@ class HistoricalWeatherCheckRestController implements ContainerInjectableInterfa
         ];
         return [$json];
     }
+
+
 
     /**
      * Try to access a forbidden resource.

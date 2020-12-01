@@ -31,8 +31,6 @@ class BController implements ContainerInjectableInterface
         ]);
     }
 
-
-
     public function curlAction()
     {
         $userContainer = new Users();
@@ -48,8 +46,6 @@ class BController implements ContainerInjectableInterface
             "title" => "B curl",
         ]);
     }
-
-
 
     public function mcurlAction()
     {

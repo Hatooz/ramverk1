@@ -18,8 +18,6 @@ class WeatherService
         $this->message = $message;
     }
 
-
-
     public function useService() : string
     {
         return "This service loads a message from the config file.<br>&gt; '{$this->message}'";
@@ -28,7 +26,7 @@ class WeatherService
     public function getWeather($cIp, $cLat, $cLon)
     {
         $key_array = include(__DIR__ . '/../../config/api_keys.php');
-        var_dump($key_array);
+        
         $stack = new Ipstack();
         $lat = $cLat;
         $lon = $cLon;
@@ -37,18 +35,18 @@ class WeatherService
             $lat = $response["latitude"];
             $lon = $response["longitude"];
         }
-        
-        $api_key = "9f4ea5c263ca3d8d37ddfce61b157300";
-        
+
         $query = "https://api.openweathermap.org/data/2.5/forecast?lat=". $lat . "&lon=".  $lon . "&appid=" . $key_array["keys"]["weather"];
+
         if ($lat != null && $lon != null) {
             $res = file_get_contents($query) ?? null;
-        }
-        
+        }               
         $info = json_decode($res ?? null, true);
+
         if ($info == null) {
             $info = ["error" => "Ingen info hittades för angivna ip/koordinater"];
         }
+
         return ["weather" => $info, "ip" => $response];
     }
     
@@ -88,8 +86,7 @@ class WeatherService
 
     public function getWeatherThroughMultiCurl($cIp, $cLat, $cLon)
     {
-        $key_array = include(__DIR__ . '/../../config/api_keys.php');
-        var_dump($key_array);
+        $key_array = include(__DIR__ . '/../../config/api_keys.php');        
         $stack = new Ipstack();
         $lat = $cLat;
         $lon = $cLon;
@@ -98,10 +95,8 @@ class WeatherService
             $lat = $ipresponse["latitude"];
             $lon = $ipresponse["longitude"];
         }
-        $dateTime = [time() - 432000, time() - 345600, time() - 259200, time() - 172800, time() - 86400];
-        
-        $url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=". $lat . "&lon=".  $lon . "&dt=" . $dt . "&appid=" . $key_array["keys"]["weather"];
 
+        $dateTime = [time() - 432000, time() - 345600, time() - 259200, time() - 172800, time() - 86400];
         $options = [
             CURLOPT_RETURNTRANSFER => true,
         ];

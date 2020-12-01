@@ -88,7 +88,7 @@ class IpstackApiController implements ContainerInjectableInterface
             die();
         }
 
-        $body = $this->di->get("request")->getBodyAsJson()["ipstack_rest"];
+        $body = $this->di->get("request")->getBodyAsJson()["ipstack_rest"] ?? null;
         $json = $stack->getIpInfo($body ?? "127.0.0.1", $trimmedKey);
         return [$json];
     }

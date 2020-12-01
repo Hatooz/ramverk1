@@ -4,7 +4,6 @@ namespace Anax\Controller;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
-use Anax\Ipstack\Ipstack;
 
 // use Anax\Route\Exception\ForbiddenException;
 // use Anax\Route\Exception\NotFoundException;
@@ -54,10 +53,6 @@ class HistoricalWeatherCheckController implements ContainerInjectableInterface
      */
     public function indexActionGet() : object
     {
-        
-
-
-        
         $weather = $this->di->session->get("weatherData")["content"]["weather"];
         $ip = $this->di->session->get("weatherData")["content"]["ip"];
 
@@ -65,40 +60,27 @@ class HistoricalWeatherCheckController implements ContainerInjectableInterface
            "body" => $weather ?? null,
            "lat" => $weather["lat"] ?? null,
            "lon" => $weather["lon"] ?? null,
-           "ip" => $ip ?? null,
-           
+           "ip" => $ip ?? null           
         ];
+
         return $this->di->get("page")
             ->add("historical_weather_check", $data)
             ->render(["title" => "Weather Check"]);        
     }
     
     public function weatherActionPost()
-    {
-        $accessKey = file_get_contents(__DIR__ . "/api.txt");
-        $trimmedKey =  trim($accessKey);
+    {        
         $ip = $this->di->get("request")->getPost("ip") ?? null;
         $lat = $this->di->get("request")->getPost("lat") ?? null;
         $lon = $this->di->get("request")->getPost("lon") ?? null;
-
         $service = $this->di->get("weatherservice");
-
         $data = [
             "content" => $service->getWeatherThroughMultiCurl($ip, $lat, $lon),
         ];
+
         $this->di->session->set("weatherData", $data);
 
-
-        return $this->di->response->redirect("historical_weather_check");
-        // $stack = new Ipstack();
-        // $body = $this->di->get("request")->getPost("ip");
-        // $accessKey = file_get_contents(__DIR__ . "/api.txt");
-        // $trimmedKey =  trim($accessKey);
-        
-        // $info = $stack->getIpInfo($body ?? "127.0.0.1", $trimmedKey);
-        // $this->di->session->set("ip", $info);
-        // $this->di->session->set("key", $accessKey);
-        // return $this->di->response->redirect("weather_check");
+        return $this->di->response->redirect("historical_weather_check");    
     }
 
     /**

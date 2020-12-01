@@ -6,8 +6,8 @@ return [
     "routes" => [
         [
             "info" => "Historical Weather Check",
-            "mount" => "historical_weather_check",
-            "handler" => "\Anax\Controller\HistoricalWeatherCheckController",
+            "mount" => "historical_weather_check_rest",
+            "handler" => "\Anax\Controller\HistoricalWeatherCheckRestController",
         ],
     ]
 ];

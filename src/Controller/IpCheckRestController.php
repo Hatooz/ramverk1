@@ -108,29 +108,31 @@ class IpCheckRestController implements ContainerInjectableInterface
         }
       
         $body = $this->di->get("request")->getBodyAsJson();
-        if(isset($body["ip_rest"])) {
-            $validIp4 = filter_var($body["ip_rest"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
-            $validIp6 = filter_var($body["ip_rest"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
-        }
+        
+        $validIp4 = filter_var($body["ip_rest"] ?? "127.0.0.1", FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+        $validIp6 = filter_var($body["ip_rest"] ?? "::1", FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        
+        // if(isset($body["ip_rest"])) {
+        //     $validIp4 = filter_var($body["ip_rest"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+        //     $validIp6 = filter_var($body["ip_rest"], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+        // }
         
         if ($validIp4) {
             $data = [
                 "result" => "IP address $validIp4 is a valid IPv4 IP.",
-                "domain" => gethostbyaddr($body)
+                "domain" => gethostbyaddr($validIp4)
             ];
         } elseif ($validIp6) {
             $data = [
                 "result" => "IP address $validIp6 is a valid IPv6 IP.",
-                "domain" => gethostbyaddr($body)
+                "domain" => gethostbyaddr($validIp6)
             ];
         } else {
             $data = [
                 "result" => "IP address is not a valid IP.",
                 "domain" => null
             ];
-        }
-
-       
+        }       
      
         $json = [
             "message" => __METHOD__ . ", POST",
