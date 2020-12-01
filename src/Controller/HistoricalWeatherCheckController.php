@@ -56,20 +56,20 @@ class HistoricalWeatherCheckController implements ContainerInjectableInterface
         $weather = $this->di->session->get("weatherData")["content"]["weather"];
         $ip = $this->di->session->get("weatherData")["content"]["ip"];
 
-        $data = [            
+        $data = [
            "body" => $weather ?? null,
            "lat" => $weather[0]["lat"] ?? null,
            "lon" => $weather[0]["lon"] ?? null,
-           "ip" => $ip ?? null           
+           "ip" => $ip ?? null
         ];
 
         return $this->di->get("page")
             ->add("historical_weather_check", $data)
-            ->render(["title" => "Weather Check"]);        
+            ->render(["title" => "Weather Check"]);
     }
-    
+
     public function weatherActionPost()
-    {        
+    {
         $ip = $this->di->get("request")->getPost("ip") ?? null;
         $lat = $this->di->get("request")->getPost("lat") ?? null;
         $lon = $this->di->get("request")->getPost("lon") ?? null;
@@ -80,7 +80,7 @@ class HistoricalWeatherCheckController implements ContainerInjectableInterface
 
         $this->di->session->set("weatherData", $data);
 
-        return $this->di->response->redirect("historical_weather_check");    
+        return $this->di->response->redirect("historical_weather_check");
     }
 
     /**

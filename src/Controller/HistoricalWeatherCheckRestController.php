@@ -54,7 +54,7 @@ class HistoricalWeatherCheckRestController implements ContainerInjectableInterfa
     {
         return $this->di->get("page")
             ->add("historical_weather_check_rest")
-            ->render(["title" => "Weather Check"]);        
+            ->render(["title" => "Weather Check"]);
     }
     
     public function indexActionPost()
@@ -66,7 +66,7 @@ class HistoricalWeatherCheckRestController implements ContainerInjectableInterfa
         $data = [
             "content" => $service->getWeatherThroughMultiCurl($ip, $lat, $lon),
         ];
-        return [$data];     
+        return [$data];
     }
 
     /**

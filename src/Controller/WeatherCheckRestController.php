@@ -41,8 +41,6 @@ class WeatherCheckRestController implements ContainerInjectableInterface
         $this->db = "active";
     }
 
-
-
     /**
      * This is the index method action, it handles:
      * GET METHOD mountpoint
@@ -53,23 +51,22 @@ class WeatherCheckRestController implements ContainerInjectableInterface
      */
     public function indexActionGet() : object
     {
-        
- 
         return $this->di->get("page")
             ->add("weather_check_rest")
-            ->render(["title" => "Weather Check"]);        
+            ->render(["title" => "Weather Check"]);
     }
     
     public function indexActionPost()
-    {        
+    {
         $ip = $this->di->get("request")->getPost("ip") ?? null;
         $lat = $this->di->get("request")->getPost("lat") ?? null;
         $lon = $this->di->get("request")->getPost("lon") ?? null;
         $service = $this->di->get("weatherservice");
         $data = [
             "content" => $service->getWeather($ip, $lat, $lon),
-        ];        
-        return [$data]; 
+        ];
+
+        return [$data];
     }
 
     /**

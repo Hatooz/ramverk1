@@ -35,7 +35,7 @@ echo "<script> window.onload = function() {
     <input type="text" name="lon" id="lon"><br>
     <input type="submit" value="Check">
 </form>
-<?php if($error) : ?>
+<?php if ($error) : ?>
     <p>Ingen info hittades för angivna ip/koordinater</p>
  
 <?php else : ?>
@@ -60,17 +60,17 @@ echo "<script> window.onload = function() {
     <th>Temp</th>    
     <th>Fuktighet</th>
     <th>Väder</th>
-    <?php foreach($body as $key=>$value): ?>
-    <?php
-        $date = new DateTime();
-        $date->setTimestamp($value["current"]["dt"]);
-    ?>
-    <tr>
-        <td><?= $date->format('d-m-Y H:i:s') ?></td>        
-        <td><?= round($value["current"]["temp"] - 273) . "&deg C" ?></td>        
-        <td><?= $value["current"]["humidity"] . "%" ?></td>
-        <td><?= $value["current"]["weather"][0]["main"] ?></td>
-    </tr>
+    <?php foreach ($body as $key => $value): ?> 
+        <?php
+            $date = new DateTime();
+            $date->setTimestamp($value["current"]["dt"]);
+        ?>
+        <tr>
+            <td><?= $date->format('d-m-Y H:i:s') ?></td>        
+            <td><?= round($value["current"]["temp"] - 273) . "&deg C" ?></td>        
+            <td><?= $value["current"]["humidity"] . "%" ?></td>
+            <td><?= $value["current"]["weather"][0]["main"] ?></td>
+        </tr>
     
     <?php endforeach; ?>
 </table>

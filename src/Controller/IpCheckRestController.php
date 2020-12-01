@@ -132,7 +132,7 @@ class IpCheckRestController implements ContainerInjectableInterface
                 "result" => "IP address is not a valid IP.",
                 "domain" => null
             ];
-        }       
+        }
      
         $json = [
             "message" => __METHOD__ . ", POST",

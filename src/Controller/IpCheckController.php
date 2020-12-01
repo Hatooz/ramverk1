@@ -55,10 +55,8 @@ class IpCheckController implements ContainerInjectableInterface
     public function indexActionGet() : object
     {
         $body = $this->di->session->get("ip");        
-        $url = $this->di->session->get("ip");
-        $data = [
-            "key" => $key ?? null,
-            "url" => $url ?? null,
+        $data = [            
+            "url" => $body ?? null,
             "ip" => $body["ip"] ?? null,
             "type" => $body["type"] ?? null,
             "country" => $body["country_name"] ?? null,
@@ -87,9 +85,9 @@ class IpCheckController implements ContainerInjectableInterface
         $stack = new Ipstack();
         $body = $this->di->get("request")->getPost("ip");
         $keyArray = include(__DIR__ . '/../../config/api_keys.php');
-        $trimmedKey =  $keyArray["keys"]["ipstack"];        
+        $trimmedKey =  $keyArray["keys"]["ipstack"];
         $info = $stack->getIpInfo($body ?? "127.0.0.1", $trimmedKey);
-        $this->di->session->set("ip", $info);        
+        $this->di->session->set("ip", $info);
         return $this->di->response->redirect("ip_check");
     }
 

@@ -1,8 +1,8 @@
 <?php
 
 namespace Anax\Service;
-use Anax\Ipstack\Ipstack;
 
+use Anax\Ipstack\Ipstack;
 
 /**
  * A plain service class with no dependencies.
@@ -40,7 +40,7 @@ class WeatherService
 
         if ($lat != null && $lon != null) {
             $res = file_get_contents($query) ?? null;
-        }               
+        }
         $info = json_decode($res ?? null, true);
 
         if ($info == null) {
@@ -86,7 +86,7 @@ class WeatherService
 
     public function getWeatherThroughMultiCurl($cIp, $cLat, $cLon)
     {
-        $keyArray = include(__DIR__ . '/../../config/api_keys.php');        
+        $keyArray = include(__DIR__ . '/../../config/api_keys.php');
         $stack = new Ipstack();
         $lat = $cLat;
         $lon = $cLon;

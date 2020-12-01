@@ -19,16 +19,13 @@ echo "<script> window.onload = function() {
 <form action="weather_check/weather" method="POST" class="weather-form">
     <label for="ip">IP: </label>
     <input type="text" name="ip" id="ip">
-    <!-- <input type="submit" value="Check"> -->
-<!-- </form> -->
-<!-- <form action="weather_check/ipstack" method="POST" class="weather-form"> -->
     <label for="lat">Latitude: </label>
     <input type="text" name="lat" id="lat">
     <label for="lon">Longitude: </label>
     <input type="text" name="lon" id="lon"><br>
     <input type="submit" value="Check">
 </form>
-<?php if($error) : ?>
+<?php if ($error) : ?>
     <p>Ingen info hittades för angivna ip/koordinater</p>
  
 <?php else : ?>
@@ -50,8 +47,7 @@ echo "<script> window.onload = function() {
     <th>Temp</th>    
     <th>Fuktighet</th>
     <th>Väder</th>
-    <?php foreach($body as $key=>$value): ?>
-    
+    <?php foreach ($body as $key =>$value): ?>     
     <tr>
         <td><?= $value["dt_txt"] ?></td>        
         <td><?= round($value["main"]["temp"] - 273) . "&deg C" ?></td>        
