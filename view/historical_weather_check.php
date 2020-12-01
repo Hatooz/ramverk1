@@ -3,8 +3,6 @@ namespace Anax\View;
 
 use DateTime;
 
-// var_dump($body);
-// var_dump($ip);
 $error = false;
 if (isset($body["message"]) && $body["message"] == 'Nothing to geocode') {
     $error = true;

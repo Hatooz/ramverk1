@@ -25,8 +25,7 @@ class ErrorHandlerController implements ContainerInjectableInterface
 
      * @return object as the response.
      */
-    // public function catchAll(...$args) : object
-    public function catchAll() : object
+    public function catchAll(...$args) : object
     {
         $title = " | Anax";
         $pages = [
