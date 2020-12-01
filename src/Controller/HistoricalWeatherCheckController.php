@@ -58,8 +58,8 @@ class HistoricalWeatherCheckController implements ContainerInjectableInterface
 
         $data = [            
            "body" => $weather ?? null,
-           "lat" => $weather["lat"] ?? null,
-           "lon" => $weather["lon"] ?? null,
+           "lat" => $weather[0]["lat"] ?? null,
+           "lon" => $weather[0]["lon"] ?? null,
            "ip" => $ip ?? null           
         ];
 

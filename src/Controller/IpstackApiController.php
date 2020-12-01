@@ -74,8 +74,8 @@ class IpstackApiController implements ContainerInjectableInterface
      */
     public function indexActionPost()
     {
-        $key_array = include(__DIR__ . '/../../config/api_keys.php');
-        $trimmedKey =  $key_array["keys"]["ipstack"];
+        $keyArray = include(__DIR__ . '/../../config/api_keys.php');
+        $trimmedKey =  $keyArray["keys"]["ipstack"];
         $stack = new Ipstack();
         $doRest = $this->di->get("request")->getPost("doRest");
         if ($doRest) {

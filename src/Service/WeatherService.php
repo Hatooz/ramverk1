@@ -25,18 +25,18 @@ class WeatherService
 
     public function getWeather($cIp, $cLat, $cLon)
     {
-        $key_array = include(__DIR__ . '/../../config/api_keys.php');
+        $keyArray = include(__DIR__ . '/../../config/api_keys.php');
         
         $stack = new Ipstack();
         $lat = $cLat;
         $lon = $cLon;
         if (($cLat == null || $cLon == null) && $cIp != null) {
-            $response = $stack->getIpInfo($cIp, $key_array["keys"]["ipstack"]);
+            $response = $stack->getIpInfo($cIp, $keyArray["keys"]["ipstack"]);
             $lat = $response["latitude"];
             $lon = $response["longitude"];
         }
 
-        $query = "https://api.openweathermap.org/data/2.5/forecast?lat=". $lat . "&lon=".  $lon . "&appid=" . $key_array["keys"]["weather"];
+        $query = "https://api.openweathermap.org/data/2.5/forecast?lat=". $lat . "&lon=".  $lon . "&appid=" . $keyArray["keys"]["weather"];
 
         if ($lat != null && $lon != null) {
             $res = file_get_contents($query) ?? null;
@@ -52,18 +52,18 @@ class WeatherService
     
     public function getWeatherThroughCurl($cIp, $cLat, $cLon) : array
     {
-        $key_array = include(__DIR__ . '/../../config/api_keys.php');
-        var_dump($key_array);
+        $keyArray = include(__DIR__ . '/../../config/api_keys.php');
+        var_dump($keyArray);
         $stack = new Ipstack();
         $lat = $cLat;
         $lon = $cLon;
         if (($cLat == null || $cLon == null) && $cIp != null) {
-            $response = $stack->getIpInfo($cIp, $key_array["keys"]["ipstack"]);
+            $response = $stack->getIpInfo($cIp, $keyArray["keys"]["ipstack"]);
             $lat = $response["latitude"];
             $lon = $response["longitude"];
         }
         $dt = time() - 432000;
-        $url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=". $lat . "&lon=".  $lon . "&dt=" . $dt . "&appid=" . $key_array["keys"]["weather"];
+        $url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=". $lat . "&lon=".  $lon . "&dt=" . $dt . "&appid=" . $keyArray["keys"]["weather"];
 
         //  Initiate curl handler
         $ch = curl_init();
@@ -86,12 +86,12 @@ class WeatherService
 
     public function getWeatherThroughMultiCurl($cIp, $cLat, $cLon)
     {
-        $key_array = include(__DIR__ . '/../../config/api_keys.php');        
+        $keyArray = include(__DIR__ . '/../../config/api_keys.php');        
         $stack = new Ipstack();
         $lat = $cLat;
         $lon = $cLon;
         if (($cLat == null || $cLon == null) && $cIp != null) {
-            $ipresponse = $stack->getIpInfo($cIp, $key_array["keys"]["ipstack"]);
+            $ipresponse = $stack->getIpInfo($cIp, $keyArray["keys"]["ipstack"]);
             $lat = $ipresponse["latitude"];
             $lon = $ipresponse["longitude"];
         }
@@ -106,7 +106,7 @@ class WeatherService
         $mh = curl_multi_init();
         $chAll = [];
         foreach ($dateTime as $dt) {
-            $ch = curl_init("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=". $lat . "&lon=".  $lon . "&dt=" . $dt . "&appid=" . $key_array["keys"]["weather"]);
+            $ch = curl_init("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=". $lat . "&lon=".  $lon . "&dt=" . $dt . "&appid=" . $keyArray["keys"]["weather"]);
             curl_setopt_array($ch, $options);
             curl_multi_add_handle($mh, $ch);
             $chAll[] = $ch;
