@@ -53,8 +53,8 @@ class HistoricalWeatherCheckController implements ContainerInjectableInterface
      */
     public function indexActionGet() : object
     {
-        $weather = $this->di->session->get("weatherData")["content"]["weather"];
-        $ip = $this->di->session->get("weatherData")["content"]["ip"];
+        $weather = $this->di->session->get("weatherData")["content"]["weather"] ?? null;
+        $ip = $this->di->session->get("weatherData")["content"]["ip"] ?? null;
 
         $data = [
            "body" => $weather ?? null,
