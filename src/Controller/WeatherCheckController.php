@@ -61,7 +61,7 @@ class WeatherCheckController implements ContainerInjectableInterface
            "body" => $weather["list"] ?? null,
            "lat" => $weather["city"]["coord"]["lat"] ?? null,
            "lon" => $weather["city"]["coord"]["lon"] ?? null,
-           "ip" => $ip ?? null,           
+           "ip" => $ip ?? null,
         ];
 
         return $this->di->get("page")
@@ -81,7 +81,7 @@ class WeatherCheckController implements ContainerInjectableInterface
 
         $this->di->session->set("weatherData", $data);
 
-        return $this->di->response->redirect("weather_check");        
+        return $this->di->get("response")->redirect("weather_check");
     }
 
     /**

@@ -47,6 +47,10 @@ class WeatherService
             $info = ["error" => "Ingen info hittades för angivna ip/koordinater"];
         }
 
+        if (!isset($response)) {
+            $response = null;
+        }
+
         return ["weather" => $info, "ip" => $response];
     }
     

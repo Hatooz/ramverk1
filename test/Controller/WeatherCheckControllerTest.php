@@ -51,6 +51,15 @@ class WeatherCheckControllerTest extends TestCase
         $res = $this->controller->indexActionGet();
         $this->assertInternalType("object", $res);
     }
+    /**
+     * Test the route "index".
+     */
+    public function testWeatherAction()
+    {
+        $this->di->get("session")->start();
+        $res = $this->controller->weatherActionPost();
+        $this->assertInternalType("object", $res);
+    }
 
     /**
      * Test the route "dump-di".

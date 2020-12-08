@@ -54,8 +54,8 @@ class IpCheckController implements ContainerInjectableInterface
      */
     public function indexActionGet() : object
     {
-        $body = $this->di->session->get("ip");        
-        $data = [            
+        $body = $this->di->session->get("ip");
+        $data = [
             "url" => $body ?? null,
             "ip" => $body["ip"] ?? null,
             "type" => $body["type"] ?? null,

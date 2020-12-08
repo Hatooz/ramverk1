@@ -44,10 +44,10 @@ echo "<script> window.onload = function() {
     <th>Län</th>
     <th>Stad</th>
     <tr>
-    <td><?= $ip["continent_name"] ?></td>
-    <td><?= $ip["country_name"] ?></td>
-    <td><?= $ip["region_name"] ?></td>
-    <td><?= $ip["city"] ?></td>
+    <td><?= $ip["continent_name"] ?? null ?></td>
+    <td><?= $ip["country_name"] ?? null?></td>
+    <td><?= $ip["region_name"] ?? null ?></td>
+    <td><?= $ip["city"] ?? null ?></td>
     </tr>
     </table>
     <?php endif; ?>
@@ -58,7 +58,7 @@ echo "<script> window.onload = function() {
     <th>Temp</th>    
     <th>Fuktighet</th>
     <th>Väder</th>
-    <?php foreach ($body as $key => $value): ?> 
+    <?php foreach ($body as $key => $value): ?>  
         <?php
             $date = new DateTime();
             $date->setTimestamp($value["current"]["dt"]);

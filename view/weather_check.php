@@ -1,5 +1,6 @@
 <?php
 namespace Anax\View;
+
 // var_dump($ip);
 $error = false;
 if ($body == null) {
@@ -16,6 +17,7 @@ echo "<script> window.onload = function() {
 <div id="map"></div>
 <script src='https://unpkg.com/leaflet@1.3.3/dist/leaflet.js'></script>
 <h1>Väderrapport</h1>
+
 <form action="weather_check/weather" method="POST" class="weather-form">
     <label for="ip">IP: </label>
     <input type="text" name="ip" id="ip">
@@ -35,10 +37,10 @@ echo "<script> window.onload = function() {
     <th>Län</th>
     <th>Stad</th>
     <tr>
-    <td><?= $ip["continent_name"] ?></td>
-    <td><?= $ip["country_name"] ?></td>
-    <td><?= $ip["region_name"] ?></td>
-    <td><?= $ip["city"] ?></td>
+    <td><?= $ip["continent_name"] ?? null ?></td>
+    <td><?= $ip["country_name"] ?? null?></td>
+    <td><?= $ip["region_name"] ?? null ?></td>
+    <td><?= $ip["city"] ?? null ?></td>
     </tr>
     </table>
     
@@ -47,7 +49,7 @@ echo "<script> window.onload = function() {
     <th>Temp</th>    
     <th>Fuktighet</th>
     <th>Väder</th>
-    <?php foreach ($body as $key =>$value): ?>     
+    <?php foreach ($body as $key => $value): ?> 
     <tr>
         <td><?= $value["dt_txt"] ?></td>        
         <td><?= round($value["main"]["temp"] - 273) . "&deg C" ?></td>        
