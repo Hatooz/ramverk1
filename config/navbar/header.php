@@ -68,6 +68,11 @@ return [
             "url" => "restServices",
             "title" => "Weather Check",
         ],
+        [
+            "text" => "Book",
+            "url" => "book",
+            "title" => "Book",
+        ],
         // [
         //     "text" => "Föregående väderrapport REST",
         //     "url" => "historical_weather_check_rest",

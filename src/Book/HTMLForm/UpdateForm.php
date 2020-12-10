@@ -34,16 +34,22 @@ class UpdateForm extends FormModel
                     "value" => $book->id,
                 ],
 
-                "column1" => [
+                "title" => [
                     "type" => "text",
                     "validation" => ["not_empty"],
-                    "value" => $book->column1,
+                    "value" => $book->title,
                 ],
 
-                "column2" => [
+                "author" => [
                     "type" => "text",
                     "validation" => ["not_empty"],
-                    "value" => $book->column2,
+                    "value" => $book->author,
+                ],
+
+                "image" => [
+                    "type" => "text",
+                    "validation" => ["not_empty"],
+                    "value" => $book->image,
                 ],
 
                 "submit" => [
@@ -89,8 +95,9 @@ class UpdateForm extends FormModel
         $book = new Book();
         $book->setDb($this->di->get("dbqb"));
         $book->find("id", $this->form->value("id"));
-        $book->column1 = $this->form->value("column1");
-        $book->column2 = $this->form->value("column2");
+        $book->title = $this->form->value("title");
+        $book->author = $this->form->value("author");
+        $book->image = $this->form->value("image");
         $book->save();
         return true;
     }
