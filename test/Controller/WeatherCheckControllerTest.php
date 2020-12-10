@@ -54,10 +54,19 @@ class WeatherCheckControllerTest extends TestCase
     /**
      * Test the route "index".
      */
-    public function testWeatherAction()
+    public function testWeatherNoCoordsAction()
     {
         $this->di->get("session")->start();
-        $res = $this->controller->weatherActionPost();
+        $res = $this->controller->weatherActionPost(false);
+        $this->assertInternalType("object", $res);
+    }
+    /**
+     * Test the route "index".
+     */
+    public function testWeatherCoordsAction()
+    {
+        $this->di->get("session")->start();
+        $res = $this->controller->weatherActionPost(true);
         $this->assertInternalType("object", $res);
     }
 

@@ -61,7 +61,7 @@ class WeatherCheckController implements ContainerInjectableInterface
            "body" => $weather["list"] ?? null,
            "lat" => $weather["city"]["coord"]["lat"] ?? null,
            "lon" => $weather["city"]["coord"]["lon"] ?? null,
-           "ip" => $ip ?? null,
+           "ip" => $ip ?? null,           
         ];
 
         return $this->di->get("page")
@@ -69,11 +69,11 @@ class WeatherCheckController implements ContainerInjectableInterface
             ->render(["title" => "Weather Check"]);
     }
 
-    public function weatherActionPost()
+    public function weatherActionPost($withCoords = null)
     {
-        $ip = $this->di->get("request")->getPost("ip") ?? null;
-        $lat = $this->di->get("request")->getPost("lat") ?? null;
-        $lon = $this->di->get("request")->getPost("lon") ?? null;
+        $ip = $this->di->get("request")->getPost("lat") ? $this->di->get("request")->getPost("lat") : $withCoords;
+        $lat = ($this->di->get("request")->getPost("lat") ? $this->di->get("request")->getPost("lat") : $withCoords) ? "56.06" :  null;
+        $lon = ($this->di->get("request")->getPost("lon") ? $this->di->get("request")->getPost("lon") : $withCoords) ? "14.15" :  null;
         $service = $this->di->get("weatherservice");
         $data = [
             "content" => $service->getWeather($ip, $lat, $lon),
@@ -81,7 +81,7 @@ class WeatherCheckController implements ContainerInjectableInterface
 
         $this->di->session->set("weatherData", $data);
 
-        return $this->di->get("response")->redirect("weather_check");
+        return $this->di->get("response")->redirect("weather_check");        
     }
 
     /**
